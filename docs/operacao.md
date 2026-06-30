@@ -11,12 +11,22 @@ Autenticacao:
 
 - Header: `Authorization: Bearer <MY_IA_API_KEY>`
 
+## Conversa no terminal
+
+Use o gateway, nao o `ollama run` direto:
+
+```bash
+cd /opt/my-ia
+./scripts/chat.sh
+```
+
 ## Boas praticas para WhatsApp
 
 - Usar mensagens curtas.
-- Limitar `max_tokens` entre 80 e 200 no primeiro uso.
-- Manter `temperature` entre 0.2 e 0.4 para atendimento.
+- Limitar `max_tokens` entre 30 e 80 no primeiro uso.
+- Manter `temperature` entre 0.4 e 0.7 para atendimento mais natural.
 - O gateway envia `think:false` ao Ollama para reduzir latencia e evitar respostas vazias em modelos Qwen3.
+- O gateway limita respostas a 40 tokens quando o cliente nao envia `max_tokens`.
 - Resumir historico longo antes de enviar para o modelo.
 - Nao mandar anexos ou textos longos diretamente sem pre-processamento.
 

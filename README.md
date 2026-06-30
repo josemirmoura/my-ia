@@ -5,7 +5,7 @@ API local para uma LLM pequena, CPU-only, voltada a respostas curtas de atendime
 ## Decisao inicial
 
 - Runtime: Ollama, por ser o caminho mais simples e rapido para operar uma unica LLM.
-- Modelo: `qwen3:1.7b`, equilibrio entre velocidade e qualidade em CPU.
+- Modelo: `gemma3:1b`, priorizando respostas curtas com melhor aderencia a instrucoes em CPU.
 - API publica dos sistemas: `my-ia-api`, compativel com o formato basico de `/v1/chat/completions`.
 - LLM: privada na rede Docker, sem porta publicada.
 - Porta local inicial: `127.0.0.1:18081`.
@@ -30,6 +30,12 @@ Testar:
 ./scripts/smoke-test.sh
 ```
 
+Conversar pelo terminal usando o gateway:
+
+```bash
+./scripts/chat.sh
+```
+
 Ver logs:
 
 ```bash
@@ -47,16 +53,18 @@ curl http://127.0.0.1:18081/v1/chat/completions \
       {"role": "system", "content": "Responda em pt-BR, curto e adequado para WhatsApp."},
       {"role": "user", "content": "Ola, voces fazem atendimento comercial?"}
     ],
-    "max_tokens": 160,
-    "temperature": 0.2
+    "max_tokens": 40,
+    "temperature": 0.45
   }'
 ```
 
 ## Limites iniciais
 
-- Ollama: ate 2 vCPU e 3 GiB.
+- Ollama: ate 1 vCPU e 2 GiB.
 - API: ate 0.5 vCPU e 256 MiB.
 - Um modelo carregado por vez.
 - Paralelismo do Ollama: 1.
+- Respostas limitadas por padrao a 40 tokens.
+- `think:false` sempre aplicado no gateway.
 
 Esses limites protegem os demais servicos da VPS. Para expor por dominio, colocar Traefik na frente da API e manter o Ollama privado.

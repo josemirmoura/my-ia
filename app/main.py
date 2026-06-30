@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import uuid
 from typing import Any
@@ -10,11 +11,22 @@ from pydantic import BaseModel, Field
 
 
 API_KEY = os.environ["MY_IA_API_KEY"]
-MODEL = os.getenv("MY_IA_MODEL", "qwen3:1.7b")
+MODEL = os.getenv("MY_IA_MODEL", "gemma3:1b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434").rstrip("/")
-TIMEOUT_SECONDS = float(os.getenv("REQUEST_TIMEOUT_SECONDS", "120"))
-DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "4096"))
-DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", "0.3"))
+TIMEOUT_SECONDS = float(os.getenv("REQUEST_TIMEOUT_SECONDS", "20"))
+DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "1024"))
+DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", "0.45"))
+DEFAULT_MAX_TOKENS = int(os.getenv("DEFAULT_MAX_TOKENS", "40"))
+DEFAULT_NUM_THREAD = int(os.getenv("DEFAULT_NUM_THREAD", "1"))
+DEFAULT_SYSTEM_PROMPT = os.getenv(
+    "DEFAULT_SYSTEM_PROMPT",
+    "Voce e um atendente de WhatsApp. Responda em portugues do Brasil, "
+    "com tom cordial, direto e levemente animado. Use 1 ou 2 frases. "
+    "Use no maximo um emoji, e somente quando combinar com a resposta. "
+    "Nao invente informacoes; se faltar contexto, peca a informacao necessaria. "
+    "Nao use bom dia, boa tarde ou boa noite, a menos que o usuario ja tenha usado. "
+    "Nao mostre raciocinio interno.",
+)
 
 app = FastAPI(title="my-ia", version="0.1.0")
 
@@ -62,6 +74,19 @@ def openai_response(content: str, model: str, prompt_tokens: int = 0, completion
     }
 
 
+def normalize_messages(messages: list[ChatMessage]) -> list[dict[str, str]]:
+    normalized = [message.model_dump() for message in messages]
+    has_system = any(message.get("role") == "system" for message in normalized)
+    if not has_system:
+        normalized.insert(0, {"role": "system", "content": DEFAULT_SYSTEM_PROMPT})
+    return normalized
+
+
+def clean_content(content: str) -> str:
+    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL | re.IGNORECASE)
+    return content.strip()
+
+
 @app.get("/health")
 async def health() -> dict[str, Any]:
     try:
@@ -105,13 +130,13 @@ async def chat_completions(
     options: dict[str, Any] = {
         "num_ctx": DEFAULT_NUM_CTX,
         "temperature": payload.temperature if payload.temperature is not None else DEFAULT_TEMPERATURE,
+        "num_predict": payload.max_tokens or DEFAULT_MAX_TOKENS,
+        "num_thread": DEFAULT_NUM_THREAD,
     }
-    if payload.max_tokens:
-        options["num_predict"] = payload.max_tokens
 
     ollama_payload = {
         "model": selected_model,
-        "messages": [message.model_dump() for message in payload.messages],
+        "messages": normalize_messages(payload.messages),
         "stream": False,
         "think": False,
         "options": options,
@@ -129,7 +154,7 @@ async def chat_completions(
         raise HTTPException(status_code=502, detail=f"Ollama unavailable: {exc}") from exc
 
     message = data.get("message", {})
-    content = message.get("content") or ""
+    content = clean_content(message.get("content") or "")
     result = openai_response(
         content=content,
         model=selected_model,

@@ -12,8 +12,8 @@ services:
       - ollama-data:/root/.ollama
     expose:
       - "11434"
-    cpus: "2.0"
-    mem_limit: 3g
+    cpus: "1.0"
+    mem_limit: 2g
     healthcheck:
       test: ["CMD", "ollama", "list"]
       interval: 30s
@@ -32,11 +32,14 @@ services:
         condition: service_healthy
     environment:
       MY_IA_API_KEY: ${MY_IA_API_KEY}
-      MY_IA_MODEL: ${MY_IA_MODEL:-qwen3:1.7b}
+      MY_IA_MODEL: ${MY_IA_MODEL:-gemma3:1b}
       OLLAMA_BASE_URL: http://ollama:11434
-      REQUEST_TIMEOUT_SECONDS: "120"
-      DEFAULT_NUM_CTX: "4096"
-      DEFAULT_TEMPERATURE: "0.3"
+      REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-20}
+      DEFAULT_NUM_CTX: ${DEFAULT_NUM_CTX:-1024}
+      DEFAULT_TEMPERATURE: ${DEFAULT_TEMPERATURE:-0.45}
+      DEFAULT_MAX_TOKENS: ${DEFAULT_MAX_TOKENS:-40}
+      DEFAULT_NUM_THREAD: ${DEFAULT_NUM_THREAD:-1}
+      DEFAULT_SYSTEM_PROMPT: ${DEFAULT_SYSTEM_PROMPT:-Voce e um atendente de WhatsApp. Responda em portugues do Brasil, com tom cordial, direto e levemente animado. Use 1 ou 2 frases. Use no maximo um emoji, e somente quando combinar com a resposta. Nao invente informacoes; se faltar contexto, peca a informacao necessaria. Nao use bom dia, boa tarde ou boa noite, a menos que o usuario ja tenha usado. Nao mostre raciocinio interno.}
     ports:
       - "${MY_IA_BIND:-127.0.0.1}:${MY_IA_PORT:-18080}:8080"
     cpus: "0.5"
@@ -50,4 +53,3 @@ services:
 
 volumes:
   ollama-data:
-
