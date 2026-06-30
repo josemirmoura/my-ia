@@ -13,15 +13,16 @@ from pydantic import BaseModel, Field
 API_KEY = os.environ["MY_IA_API_KEY"]
 MODEL = os.getenv("MY_IA_MODEL", "gemma3:1b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434").rstrip("/")
-TIMEOUT_SECONDS = float(os.getenv("REQUEST_TIMEOUT_SECONDS", "20"))
-DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "1024"))
+TIMEOUT_SECONDS = float(os.getenv("REQUEST_TIMEOUT_SECONDS", "35"))
+DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "2048"))
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", "0.45"))
-DEFAULT_MAX_TOKENS = int(os.getenv("DEFAULT_MAX_TOKENS", "40"))
+DEFAULT_MAX_TOKENS = int(os.getenv("DEFAULT_MAX_TOKENS", "100"))
 DEFAULT_NUM_THREAD = int(os.getenv("DEFAULT_NUM_THREAD", "1"))
 DEFAULT_SYSTEM_PROMPT = os.getenv(
     "DEFAULT_SYSTEM_PROMPT",
     "Voce e um atendente de WhatsApp. Responda em portugues do Brasil, "
-    "com tom cordial, direto e levemente animado. Use 1 ou 2 frases. "
+    "com tom cordial, direto e levemente animado. Use 1 ou 2 frases em respostas simples. "
+    "Quando o usuario pedir dicas, passos ou lista, use no maximo 3 itens curtos e conclua a resposta. "
     "Use no maximo um emoji, e somente quando combinar com a resposta. "
     "Nao invente informacoes; se faltar contexto, peca a informacao necessaria. "
     "Nao use bom dia, boa tarde ou boa noite, a menos que o usuario ja tenha usado. "

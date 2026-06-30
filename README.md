@@ -53,7 +53,7 @@ curl http://127.0.0.1:18081/v1/chat/completions \
       {"role": "system", "content": "Responda em pt-BR, curto e adequado para WhatsApp."},
       {"role": "user", "content": "Ola, voces fazem atendimento comercial?"}
     ],
-    "max_tokens": 40,
+    "max_tokens": 100,
     "temperature": 0.45
   }'
 ```
@@ -64,7 +64,7 @@ curl http://127.0.0.1:18081/v1/chat/completions \
 - API: ate 0.5 vCPU e 256 MiB.
 - Um modelo carregado por vez.
 - Paralelismo do Ollama: 1.
-- Respostas limitadas por padrao a 40 tokens.
+- Respostas limitadas por padrao a 100 tokens.
 - `think:false` sempre aplicado no gateway.
 
 Esses limites protegem os demais servicos da VPS. Para expor por dominio, colocar Traefik na frente da API e manter o Ollama privado.

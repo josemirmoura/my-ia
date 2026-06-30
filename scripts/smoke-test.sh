@@ -18,7 +18,7 @@ curl -fsS "http://${MY_IA_BIND:-127.0.0.1}:${MY_IA_PORT:-18080}/v1/chat/completi
       {"role": "system", "content": "Responda em português do Brasil, de forma curta, objetiva e útil para atendimento por WhatsApp."},
       {"role": "user", "content": "Diga uma saudação inicial para atendimento comercial."}
     ],
-    "max_tokens": 40,
+    "max_tokens": 100,
     "temperature": 0.45
   }'
 printf '\n'

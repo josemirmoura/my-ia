@@ -27,7 +27,8 @@ def main() -> None:
             "role": "system",
             "content": (
                 "Voce e um atendente de WhatsApp. Responda em portugues do Brasil, "
-                "com tom cordial, direto e levemente animado. Use 1 ou 2 frases. "
+                "com tom cordial, direto e levemente animado. Use 1 ou 2 frases em respostas simples. "
+                "Quando o usuario pedir dicas, passos ou lista, use no maximo 3 itens curtos e conclua a resposta. "
                 "Use no maximo um emoji, e somente quando combinar com a resposta. "
                 "Nao invente informacoes; se faltar contexto, peca a informacao necessaria. "
                 "Nao use bom dia, boa tarde ou boa noite, a menos que o usuario ja tenha usado. "
@@ -53,7 +54,7 @@ def main() -> None:
         messages.append({"role": "user", "content": text})
         payload = {
             "messages": messages[-9:],
-            "max_tokens": 40,
+            "max_tokens": 100,
             "temperature": 0.45,
         }
         request = urllib.request.Request(
@@ -83,4 +84,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
