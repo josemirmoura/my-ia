@@ -54,7 +54,7 @@ def main() -> None:
         messages.append({"role": "user", "content": text})
         payload = {
             "messages": messages[-9:],
-            "max_tokens": 1000,
+            "max_tokens": 10000,
             "temperature": 0.3,
         }
         request = urllib.request.Request(
@@ -68,7 +68,7 @@ def main() -> None:
         )
 
         try:
-            with urllib.request.urlopen(request, timeout=180) as response:
+            with urllib.request.urlopen(request, timeout=1800) as response:
                 data = json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as error:
             print(f"erro> HTTP {error.code}: {error.read().decode('utf-8')[:300]}")
