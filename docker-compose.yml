@@ -13,7 +13,7 @@ services:
     expose:
       - "11434"
     cpus: "2.0"
-    mem_limit: 2g
+    mem_limit: 4g
     healthcheck:
       test: ["CMD", "ollama", "list"]
       interval: 30s
@@ -32,10 +32,10 @@ services:
         condition: service_healthy
     environment:
       MY_IA_API_KEY: ${MY_IA_API_KEY}
-      MY_IA_MODEL: ${MY_IA_MODEL:-gemma3:1b}
+      MY_IA_MODEL: ${MY_IA_MODEL:-llama3.2:3b}
       OLLAMA_BASE_URL: http://ollama:11434
       REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-1800}
-      DEFAULT_NUM_CTX: ${DEFAULT_NUM_CTX:-2048}
+      DEFAULT_NUM_CTX: ${DEFAULT_NUM_CTX:-4096}
       DEFAULT_TEMPERATURE: ${DEFAULT_TEMPERATURE:-0.3}
       DEFAULT_MAX_TOKENS: ${DEFAULT_MAX_TOKENS:-10000}
       DEFAULT_NUM_THREAD: ${DEFAULT_NUM_THREAD:-2}

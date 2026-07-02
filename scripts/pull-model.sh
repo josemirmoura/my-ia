@@ -8,5 +8,4 @@ source .env
 set +a
 
 docker compose up -d ollama
-docker compose exec ollama ollama pull "${MY_IA_MODEL:-qwen3:1.7b}"
-
+docker compose exec ollama ollama pull "${MY_IA_MODEL:-llama3.2:3b}"

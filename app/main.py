@@ -11,10 +11,10 @@ from pydantic import BaseModel, Field
 
 
 API_KEY = os.environ["MY_IA_API_KEY"]
-MODEL = os.getenv("MY_IA_MODEL", "gemma3:1b")
+MODEL = os.getenv("MY_IA_MODEL", "llama3.2:3b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://ollama:11434").rstrip("/")
 TIMEOUT_SECONDS = float(os.getenv("REQUEST_TIMEOUT_SECONDS", "1800"))
-DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "2048"))
+DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "4096"))
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", "0.3"))
 DEFAULT_MAX_TOKENS = int(os.getenv("DEFAULT_MAX_TOKENS", "10000"))
 DEFAULT_NUM_THREAD = int(os.getenv("DEFAULT_NUM_THREAD", "2"))

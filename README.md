@@ -5,7 +5,7 @@ API local para uma LLM pequena, CPU-only, voltada a respostas curtas de atendime
 ## Decisao inicial
 
 - Runtime: Ollama, por ser o caminho mais simples e rapido para operar uma unica LLM.
-- Modelo: `gemma3:1b`, priorizando respostas curtas com melhor aderencia a instrucoes em CPU.
+- Modelo: `llama3.2:3b`, priorizando melhor conversa em CPU mantendo limites de VPS.
 - API publica dos sistemas: `my-ia-api`, compativel com o formato basico de `/v1/chat/completions`.
 - LLM: privada na rede Docker, sem porta publicada.
 - Porta local inicial: `127.0.0.1:18081`.
@@ -60,7 +60,7 @@ curl http://127.0.0.1:18081/v1/chat/completions \
 
 ## Limites iniciais
 
-- Ollama: ate 2 vCPU e 2 GiB.
+- Ollama: ate 2 vCPU e 4 GiB.
 - API: ate 0.5 vCPU e 256 MiB.
 - Um modelo carregado por vez.
 - Paralelismo do Ollama: 1.

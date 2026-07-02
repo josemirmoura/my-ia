@@ -14,7 +14,7 @@ Este pacote cria uma API local de LLM para atendimento via WhatsApp, usando CPU,
 
 - Docker + Docker Compose.
 - Ollama como runtime local de modelo.
-- Modelo: `gemma3:1b`.
+- Modelo: `llama3.2:3b`.
 - Gateway API: FastAPI + Uvicorn.
 - Endpoint principal: `/v1/chat/completions`.
 - Autenticacao: `Authorization: Bearer <MY_IA_API_KEY>`.
@@ -24,7 +24,7 @@ Este pacote cria uma API local de LLM para atendimento via WhatsApp, usando CPU,
 Servico `ollama`:
 
 - CPU: `2.0`
-- Memoria: `2g`
+- Memoria: `4g`
 - Modelos carregados: `1`
 - Paralelismo: `1`
 - Porta: privada na rede Docker, sem publicacao direta.
@@ -37,8 +37,8 @@ Servico `api`:
 
 Defaults do modelo:
 
-- `MY_IA_MODEL=gemma3:1b`
-- `DEFAULT_NUM_CTX=2048`
+- `MY_IA_MODEL=llama3.2:3b`
+- `DEFAULT_NUM_CTX=4096`
 - `DEFAULT_MAX_TOKENS=10000`
 - `DEFAULT_TEMPERATURE=0.3`
 - `DEFAULT_NUM_THREAD=2`
