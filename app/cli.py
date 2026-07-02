@@ -54,7 +54,7 @@ def main() -> None:
         messages.append({"role": "user", "content": text})
         payload = {
             "messages": messages[-9:],
-            "max_tokens": 100,
+            "max_tokens": 200,
             "temperature": 0.3,
         }
         request = urllib.request.Request(

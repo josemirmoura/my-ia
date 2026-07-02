@@ -53,7 +53,7 @@ curl http://127.0.0.1:18081/v1/chat/completions \
       {"role": "system", "content": "Responda em pt-BR, curto e adequado para WhatsApp."},
       {"role": "user", "content": "Ola, voces fazem atendimento comercial?"}
     ],
-    "max_tokens": 100,
+    "max_tokens": 200,
     "temperature": 0.3
   }'
 ```
@@ -64,7 +64,7 @@ curl http://127.0.0.1:18081/v1/chat/completions \
 - API: ate 0.5 vCPU e 256 MiB.
 - Um modelo carregado por vez.
 - Paralelismo do Ollama: 1.
-- Respostas limitadas por padrao a 100 tokens.
+- Respostas limitadas por padrao a 200 tokens.
 - `think:false` sempre aplicado no gateway.
 - Tom padrao profissional, sem emojis e sem informalidade excessiva.
 
