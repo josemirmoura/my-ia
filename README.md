@@ -60,7 +60,7 @@ curl http://127.0.0.1:18081/v1/chat/completions \
 
 ## Limites iniciais
 
-- Ollama: ate 1 vCPU e 2 GiB.
+- Ollama: ate 2 vCPU e 2 GiB.
 - API: ate 0.5 vCPU e 256 MiB.
 - Um modelo carregado por vez.
 - Paralelismo do Ollama: 1.

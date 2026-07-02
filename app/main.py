@@ -17,7 +17,7 @@ TIMEOUT_SECONDS = float(os.getenv("REQUEST_TIMEOUT_SECONDS", "1800"))
 DEFAULT_NUM_CTX = int(os.getenv("DEFAULT_NUM_CTX", "2048"))
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", "0.3"))
 DEFAULT_MAX_TOKENS = int(os.getenv("DEFAULT_MAX_TOKENS", "10000"))
-DEFAULT_NUM_THREAD = int(os.getenv("DEFAULT_NUM_THREAD", "1"))
+DEFAULT_NUM_THREAD = int(os.getenv("DEFAULT_NUM_THREAD", "2"))
 DEFAULT_SYSTEM_PROMPT = os.getenv(
     "DEFAULT_SYSTEM_PROMPT",
     "Voce e um atendente de WhatsApp. Responda em portugues do Brasil, "

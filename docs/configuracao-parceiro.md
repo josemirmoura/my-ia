@@ -23,7 +23,7 @@ Este pacote cria uma API local de LLM para atendimento via WhatsApp, usando CPU,
 
 Servico `ollama`:
 
-- CPU: `1.0`
+- CPU: `2.0`
 - Memoria: `2g`
 - Modelos carregados: `1`
 - Paralelismo: `1`
@@ -41,7 +41,7 @@ Defaults do modelo:
 - `DEFAULT_NUM_CTX=2048`
 - `DEFAULT_MAX_TOKENS=10000`
 - `DEFAULT_TEMPERATURE=0.3`
-- `DEFAULT_NUM_THREAD=1`
+- `DEFAULT_NUM_THREAD=2`
 - `REQUEST_TIMEOUT_SECONDS=1800`
 
 ## Prompt padrao
@@ -163,4 +163,4 @@ docker compose up -d --build api
 - O modelo fica carregado por `OLLAMA_KEEP_ALIVE=24h`, reduzindo cold start.
 - Para respostas mais longas, aumente `DEFAULT_MAX_TOKENS` com cuidado.
 - Para mais memoria de conversa, aumente `DEFAULT_NUM_CTX` com cuidado.
-- Para menor impacto em CPU, mantenha `DEFAULT_NUM_THREAD=1` e `cpus: "1.0"` no Ollama.
+- Para menor impacto em CPU, reduza `DEFAULT_NUM_THREAD` e `cpus` no servico Ollama.
